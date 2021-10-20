@@ -46,7 +46,7 @@ extension = Extension("cryptofeed.types", ["cryptofeed/types.pyx"],
 setup(
     name="cryptofeed",
     ext_modules=cythonize([extension], language_level=3, force=True),
-    version="2.0.2",
+    version="2.0.3",
     author="Bryant Moscon",
     author_email="bmoscon@gmail.com",
     description="Cryptocurrency Exchange Websocket Data Feed Handler",
@@ -55,7 +55,7 @@ setup(
     license="XFree86",
     keywords=["cryptocurrency", "bitcoin", "btc", "feed handler", "market feed", "market data", "crypto assets",
               "Trades", "Tickers", "BBO", "Funding", "Open Interest", "Liquidation", "Order book", "Bid", "Ask",
-              "Bitcoin.com", "Bitfinex", "bitFlyer", "AscendEX", "Bitstamp", "Bittrex", "Blockchain.com", "Bybit",
+              "fmfw.io", "Bitfinex", "bitFlyer", "AscendEX", "Bitstamp", "Bittrex", "Blockchain.com", "Bybit",
               "Binance", "Binance Delivery", "Binance Futures", "Binance US", "BitMEX", "Coinbase", "Deribit", "EXX",
               "FTX", "FTX US", "Gate.io", "Gemini", "HitBTC", "Huobi", "Huobi DM", "Huobi Swap", "Kraken",
               "Kraken Futures", "OKCoin", "OKEx", "Poloniex", "ProBit", "Upbit"],
@@ -84,7 +84,7 @@ setup(
         # Two (optional) dependencies that speed up Cryptofeed:
         "aiodns>=1.1",  # aiodns speeds up DNS resolving
         "cchardet",  # cchardet is a faster replacement for chardet
-        "order_book>=0.4.0"
+        "order_book>=0.4.1"
     ],
     extras_require={
         "arctic": ["arctic", "pandas"],
