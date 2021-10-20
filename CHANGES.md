@@ -1,6 +1,12 @@
 ## Changelog
 
-### 2.0.2
+### 2.0.3
+ * Bugfix: Use timestamp_e6 for data derived from Bybit's instrument_info data feed.
+ * Bugfix: Update postgres examples and schema. Fix postgres backend for all dtypes.
+ * Bugfix: Kucoin has a limit of 100 symbols per subscription message and 300 per connection. These limits are now respected.
+ * Bugfix: Error messages were not handled correctly on Kucoin, causing a crash.
+
+### 2.0.2 (2021-10-12)
  * Feature: random backoff when 429s are hit
  * Bugfix: Add rate limiting delay to snapshot querying on Binance
  * Update: Write deltas then snapshot when book interval is hit on Book Backends
@@ -14,6 +20,15 @@
  * Bugfix: Allow empty feedhandler to be started
  * Bugfix: Funding missing type conversion for to_dict method.
  * Bugfix: RedisStream candles boolean not being converted properly
+ * Bugfix: FTX order info not handling price of None correctly on reduce only updates
+ * Bugfix: Fills using incorrect order id
+ * Feature: Periodically refresh order books in Binance to reduce the likelihood of order levels becoming stale
+ * Update: Bitcoin.com exchange migrated to FMFW.io and API was updated
+ * Revert: Temporarily revert the concurrent http changes in Binance as well as the snapshot refresh code while bugs are resolved
+ * Bugfix: Fix Throttle callback, added an example to illustrate usage
+ * Bugfix: BinanceFutures and BinanceDelivery not handling rates and funding times of 0/null for futures contracts
+ * Bugfix: Open Interest in Bitmex not being converted to decimal
+ * Update: Renamed field quantity in Liquidation data type
 
 ### 2.0.1 (2021-09-22)
  * Bugfix: BinanceDelivery and BinanceFutures WS compression
