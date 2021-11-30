@@ -403,7 +403,8 @@ class FTX(Feed, FTXRestMixin):
             Decimal(order['filledSize']),
             Decimal(order['remainingSize']),
             None,
-            raw=msg
+            raw=msg,
+            account=self.subaccount,
         )
         await self.callback(ORDER_INFO, oi, timestamp)
 
