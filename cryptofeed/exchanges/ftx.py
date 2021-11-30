@@ -354,7 +354,8 @@ class FTX(Feed, FTXRestMixin):
             None,
             TAKER if fill['liquidity'] == 'taker' else MAKER,
             fill['time'].timestamp(),
-            raw=msg
+            raw=msg,
+            account=self.subaccount,
         )
         await self.callback(FILLS, f, timestamp)
 

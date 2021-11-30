@@ -523,8 +523,9 @@ cdef class Fill:
     cdef readonly str type
     cdef readonly double timestamp
     cdef readonly object raw  # can be dict or list
+    cdef readonly str account
 
-    def __init__(self, exchange, symbol, side, amount, price, fee, id, order_id, type, liquidity, timestamp, raw=None):
+    def __init__(self, exchange, symbol, side, amount, price, fee, id, order_id, type, liquidity, timestamp, raw=None, account=None):
         assert isinstance(price, Decimal)
         assert isinstance(amount, Decimal)
         assert fee is None or isinstance(fee, Decimal)
@@ -541,14 +542,15 @@ cdef class Fill:
         self.liquidity = liquidity
         self.timestamp = timestamp
         self.raw = raw
+        self.account = account
 
     cpdef dict to_dict(self, as_type=None):
         if as_type is None:
             return {'exchange': self.exchange, 'symbol': self.symbol, 'side': self.side, 'amount': self.amount, 'price': self.price, 'fee': self.fee, 'liquidity': self.liquidity, 'id': self.id, 'order_id': self.order_id, 'type': self.type, 'timestamp': self.timestamp}
-        return {'exchange': self.exchange, 'symbol': self.symbol, 'side': self.side, 'amount': as_type(self.amount), 'price': as_type(self.price), 'fee': as_type(self.fee), 'liquidity': self.liquidity, 'id': self.id, 'order_id': self.order_id, 'type': self.type, 'timestamp': self.timestamp}
+        return {'exchange': self.exchange, 'symbol': self.symbol, 'side': self.side, 'amount': as_type(self.amount), 'price': as_type(self.price), 'fee': as_type(self.fee), 'liquidity': self.liquidity, 'id': self.id, 'order_id': self.order_id, 'type': self.type, 'timestamp': self.timestamp, 'account': self.account}
 
     def __repr__(self):
-        return f'exchange: {self.exchange} symbol: {self.symbol} side: {self.side} amount: {self.amount} price: {self.price} fee: {self.fee} liquidity: {self.liquidity} id: {self.id} order_id: {self.order_id} type: {self.type} timestamp: {self.timestamp}'
+        return f'exchange: {self.exchange} symbol: {self.symbol} side: {self.side} amount: {self.amount} price: {self.price} fee: {self.fee} liquidity: {self.liquidity} id: {self.id} order_id: {self.order_id} type: {self.type} timestamp: {self.timestamp} account: {self.account}'
 
     def __eq__(self, cmp):
         return self.exchange == cmp.exchange and self.symbol == cmp.symbol and self.price == cmp.price and self.amount == cmp.amount and self.side == cmp.side and self.id == cmp.id and self.timestamp == cmp.timestamp and self.fee == cmp.fee and self.liquidity == cmp.liquidity and self.order_id == cmp.order_id and self.type == cmp.type
