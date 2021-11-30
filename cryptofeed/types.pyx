@@ -369,8 +369,9 @@ cdef class OrderInfo:
     cdef readonly object remaining
     cdef readonly object timestamp
     cdef readonly object raw  # Can be dict or list
+    cdef readonly str account
 
-    def __init__(self, exchange, symbol, id, side, status, type, price, amount, remaining, timestamp, raw=None):
+    def __init__(self, exchange, symbol, id, side, status, type, price, amount, remaining, timestamp, raw=None, account=None):
         assert isinstance(price, Decimal)
         assert isinstance(amount, Decimal)
         assert remaining is None or isinstance(remaining, Decimal)
@@ -387,14 +388,15 @@ cdef class OrderInfo:
         self.remaining = remaining
         self.timestamp = timestamp
         self.raw = raw
+        self.account = account
 
     cpdef dict to_dict(self, as_type=None):
         if as_type is None:
-            return {'exchange': self.exchange, 'symbol': self.symbol, 'id': self.id, 'side': self.side, 'status': self.status, 'type': self.type, 'price': self.price, 'amount': self.amount, 'remaining': self.remaining, 'timestamp': self.timestamp}
-        return {'exchange': self.exchange, 'symbol': self.symbol, 'id': self.id, 'side': self.side, 'status': self.status, 'type': self.type, 'price': as_type(self.price), 'amount': as_type(self.amount), 'remaining': as_type(self.remaining), 'timestamp': self.timestamp}
+            return {'exchange': self.exchange, 'symbol': self.symbol, 'id': self.id, 'side': self.side, 'status': self.status, 'type': self.type, 'price': self.price, 'amount': self.amount, 'remaining': self.remaining, 'timestamp': self.timestamp, 'account': self.account}
+        return {'exchange': self.exchange, 'symbol': self.symbol, 'id': self.id, 'side': self.side, 'status': self.status, 'type': self.type, 'price': as_type(self.price), 'amount': as_type(self.amount), 'remaining': as_type(self.remaining), 'timestamp': self.timestamp, 'account': self.account}
 
     def __repr__(self):
-        return f'exchange: {self.exchange} symbol: {self.symbol} id: {self.id} side: {self.side} status: {self.status} type: {self.type} price: {self.price} amount: {self.amount} remaining: {self.remaining} timestamp: {self.timestamp}'
+        return f'exchange: {self.exchange} symbol: {self.symbol} id: {self.id} side: {self.side} status: {self.status} type: {self.type} price: {self.price} amount: {self.amount} remaining: {self.remaining} timestamp: {self.timestamp} account: {self.account}'
 
     def __eq__(self, cmp):
         return self.exchange == cmp.exchange and self.symbol == cmp.symbol and self.id == cmp.id and self.status == cmp.status and self.type == cmp.type and self.price == cmp.price and self.amount == cmp.amount and self.remaining == cmp.remaining and self.timestamp == cmp.timestamp
@@ -546,7 +548,7 @@ cdef class Fill:
 
     cpdef dict to_dict(self, as_type=None):
         if as_type is None:
-            return {'exchange': self.exchange, 'symbol': self.symbol, 'side': self.side, 'amount': self.amount, 'price': self.price, 'fee': self.fee, 'liquidity': self.liquidity, 'id': self.id, 'order_id': self.order_id, 'type': self.type, 'timestamp': self.timestamp}
+            return {'exchange': self.exchange, 'symbol': self.symbol, 'side': self.side, 'amount': self.amount, 'price': self.price, 'fee': self.fee, 'liquidity': self.liquidity, 'id': self.id, 'order_id': self.order_id, 'type': self.type, 'timestamp': self.timestamp, 'account': self.account}
         return {'exchange': self.exchange, 'symbol': self.symbol, 'side': self.side, 'amount': as_type(self.amount), 'price': as_type(self.price), 'fee': as_type(self.fee), 'liquidity': self.liquidity, 'id': self.id, 'order_id': self.order_id, 'type': self.type, 'timestamp': self.timestamp, 'account': self.account}
 
     def __repr__(self):
