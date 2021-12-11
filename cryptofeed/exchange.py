@@ -29,10 +29,11 @@ class Exchange:
     valid_candle_intervals = NotImplemented
     http_sync = HTTPSync()
 
-    def __init__(self, config=None, sandbox=False, subaccount=None, **kwargs):
+    def __init__(self, config=None, sandbox=False, subaccount=None, subaccount_prefix=None **kwargs):
         self.config = Config(config=config)
         self.sandbox = sandbox
         self.subaccount = subaccount
+        self.subaccount_prefix = subaccount_prefix
 
         keys = self.config[self.id.lower()] if self.subaccount is None else self.config[self.id.lower()][self.subaccount]
         self.key_id = keys.key_id

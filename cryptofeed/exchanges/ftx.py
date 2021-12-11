@@ -342,6 +342,8 @@ class FTX(Feed, FTXRestMixin):
         }
         """
         fill = msg['data']
+        account_prefix = self.subaccount_prefix if self.subaccount_prefix else ""
+        account = None if self.subaccount is None else account_prefix + self.subaccount
         f = Fill(
             self.id,
             self.exchange_symbol_to_std_symbol(fill['market']),
@@ -355,7 +357,7 @@ class FTX(Feed, FTXRestMixin):
             TAKER if fill['liquidity'] == 'taker' else MAKER,
             fill['time'].timestamp(),
             raw=msg,
-            account=self.subaccount,
+            account=account,
         )
         await self.callback(FILLS, f, timestamp)
 
@@ -392,6 +394,8 @@ class FTX(Feed, FTXRestMixin):
         elif status == 'closed':
             status = CLOSED
 
+        account_prefix = self.subaccount_prefix if self.subaccount_prefix else ""
+        account = None if self.subaccount is None else account_prefix + self.subaccount
         oi = OrderInfo(
             self.id,
             self.exchange_symbol_to_std_symbol(order['market']),
@@ -404,7 +408,7 @@ class FTX(Feed, FTXRestMixin):
             Decimal(order['remainingSize']),
             None,
             raw=msg,
-            account=self.subaccount,
+            account=account,
         )
         await self.callback(ORDER_INFO, oi, timestamp)
 
