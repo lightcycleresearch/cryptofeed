@@ -29,7 +29,7 @@ class Exchange:
     valid_candle_intervals = NotImplemented
     http_sync = HTTPSync()
 
-    def __init__(self, config=None, sandbox=False, subaccount=None, subaccount_prefix=None **kwargs):
+    def __init__(self, config=None, sandbox=False, subaccount=None, subaccount_prefix=None, **kwargs):
         self.config = Config(config=config)
         self.sandbox = sandbox
         self.subaccount = subaccount
